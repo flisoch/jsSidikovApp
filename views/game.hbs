@@ -27,21 +27,18 @@
                 if(first + second == userGuess){
                     console.log("correct!")
                     count++;
-                    AnswerForm.elements["userGuess"].value = "";
+
                     setRandomNumbers();
                 }
                 else{
                     var name = prompt('Количество правильных ответов: '+ count +
                         "\n Введите свой ник", "qwerty");
 
-                    if(userIsValid(name)){
-                        saveRecord(name,count);
-                    }
-                    else{
-                        alert("Чтобы сохранить запись игры, зарегистрируй свой ник или выбери другой");
-                    }
+                                 //надо бы на сервере чекать, есть ли такое имя, но не могу вытащить name из запроса
+                    saveRecord(name,count);
                     count = 0;
                 }
+                AnswerForm.elements["userGuess"].value = "";
 
             }
             function saveRecord(name, count) {
@@ -50,9 +47,7 @@
                 xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
                 xhr.send(name + " " + count);
             }
-            function userIsValid(name) {
 
-            }
 
         </script>
     </head>
@@ -66,6 +61,7 @@
 
         </form>
 
+        {{>index}}
 
     </body>
 </html>

@@ -1,4 +1,0 @@
-hello
-dog
-flat
-computer
