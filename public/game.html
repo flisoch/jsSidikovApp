@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+        <script type="text/javascript">
+
+            var first = 2;
+            var second = 2;
+            var count = 0;
+
+            function setRandomNumbers() {
+                var text = document.getElementById("text");
+                text.innerText = getNumbers();
+            }
+
+            function getNumbers() {
+                first = Math.floor(Math.random()*100);
+                second = Math.floor(Math.random()*100);
+
+                return first +" + "+ second;
+            }
+
+            function checkAnswer() {
+                var AnswerForm = document.forms["AnswerForm"];
+                var userGuess = AnswerForm.elements["userGuess"].value;
+
+                if(first + second == userGuess){
+                    console.log("correct!")
+                    count++;
+                    AnswerForm.elements["userGuess"].value = "";
+                    setRandomNumbers();
+                }
+                else{
+                    var name = prompt('Количество правильных ответов: '+ count +
+                        "\n Введите свой ник", "qwerty");
+
+                    if(userIsValid(name)){
+                        saveRecord(name,count);
+                    }
+                    else{
+                        alert("Чтобы сохранить запись игры, зарегистрируй свой ник или выбери другой");
+                    }
+                    count = 0;
+                }
+
+            }
+            function saveRecord(name, count) {
+                var xhr = new XMLHttpRequest();
+                xhr.open("POST", '/records', true);
+                xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+                xhr.send(name + " " + count);
+            }
+            function userIsValid(name) {
+
+            }
+
+        </script>
+    </head>
+
+    <body>
+
+        <h1 id="text"> 2 + 2</h1>
+        <form name="AnswerForm" action="javascript:checkAnswer()">
+            <input type="text" name="userGuess" /></br></br>
+            <input name="Submit"  type="submit" value="Отправить"/>
+
+        </form>
+
+
+    </body>
+</html>
